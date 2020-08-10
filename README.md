@@ -28,26 +28,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cy hello`](#cy-hello)
 * [`cy help [COMMAND]`](#cy-help-command)
-
-## `cy hello`
-
-Describe the command here
-
-```
-USAGE
-  $ cy hello
-
-OPTIONS
-  -n, --name=name  name to print
-
-DESCRIPTION
-  ...
-  Extra documentation goes here
-```
-
-_See code: [src/commands/hello.js](https://github.com/Comyune/cy-cli/blob/v0.0.1/src/commands/hello.js)_
+* [`cy ingest`](#cy-ingest)
 
 ## `cy help [COMMAND]`
 
@@ -65,4 +47,33 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+
+## `cy ingest`
+
+The ingest command takes various formats and processes them into a generic JSON format for manipulation and publishing.
+
+```
+USAGE
+  $ cy ingest ./my-note.md
+
+OPTIONS
+  -s, --strict  Enable strict mode
+
+DESCRIPTION
+  ...
+  This will take a markdown document like this:
+
+  # Title
+  Content.
+
+  and turn it into a JSON file like this:
+
+  {
+    "title": "Title",
+    "content": "Content.",
+    "date": "2020-08-10"
+  }
+```
+
+_See code: [src/commands/ingest.js](https://github.com/Comyune/cy-cli/blob/v0.0.1/src/commands/ingest.js)_
 <!-- commandsstop -->
