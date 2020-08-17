@@ -1,56 +1,44 @@
-const {Command, flags} = require('@oclif/command')
-const getStdin = require('../filesystem/std-in-reader')
-const fsJetPack = require('fs-jetpack')
-const DEFAULT_TAB_SIZE = 2
+const {flags} = require('@oclif/command')
+const Base = require('./base')
+const IngestService = require('../services/ingest')
 
-class IngestCommand extends Command {
+class IngestCommand extends Base {
   async run(){
     const {flags} = this.parse(IngestCommand)
-    const input = await this.getInput(flags)
-    const ingestedFile = this.ingest(input)
-    this.jsonOutput(ingestedFile)
+    const ingestService = await this.buildIngestService(flags)
+    ingestService.run()
   }
 
-  // private
-
-  now() { return new Date() }
-  todaysDate() { return this.now().toISOString() }
-
-  ingest(markdownString) {
-    return {
-      title: null,
-      content: markdownString,
-      date: this.todaysDate(),
-    }
-  }
-
-  jsonOutput(input) {
-    this.log(
-      JSON.stringify(input, null, DEFAULT_TAB_SIZE)
-    )
-  }
-
-  async getInput(flags) {
-    let input
-
-    if(flags.stdin) {
-      input = await fsJetPack.read(flags.stdin)
-    } else {
-      input = await getStdin.read()
+  async buildIngestService({ inputFile }) {
+    const options = {
+      input: await this.getInput(inputFile),
     }
 
-    return input
+    const services = {
+      output: this.output,
+      outputJson: this.outputJson,
+    }
+
+    return new IngestService(options, services)
   }
 }
 
-IngestCommand.description = `Describe the command here
+IngestCommand.description = `Ingest a document into a generic JSON format
 ...
-Extra documentation goes here
+Only markdown currently supported.
+
+EXAMPLE:
+cat my-doc.md | cy ingest
+
+> {
+>   "title" : "My Doc",
+>   "content" : "Content"
+> }
 `
 
 IngestCommand.flags = {
-  strict: flags.string({char: 's', description: 'enable strict mode'}),
-  stdin: flags.string({ description: 'Path to input file (acts like STDIN)' }),
+  strict: flags.string({ char: 's', description: 'enable strict mode' }),
+  inputFile: flags.string({ description: 'Path to input file (acts like STDIN)' }),
 }
 
 module.exports = IngestCommand
