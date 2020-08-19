@@ -1,5 +1,7 @@
 const fsJetpack = require('fs-jetpack')
+const DotEnv = require('dotenv')
 
+DotEnv.config()
 
 global.fixtureFilePath = (path) => `./test/fixtures/${path}`
 

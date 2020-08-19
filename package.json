@@ -11,15 +11,18 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
+    "dotenv": "^8.2.0",
     "fs": "^0.0.1-security",
     "fs-jetpack": "^3.1.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "twit": "^2.2.11"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "eslint": "^5.13",
     "globby": "^10",
     "jest": "^26.3.0",
+    "nock": "^13.0.4",
     "nyc": "^14",
     "sinon": "^9.0.3"
   },
