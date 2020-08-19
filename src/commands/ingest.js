@@ -6,7 +6,12 @@ class IngestCommand extends Base {
   async run(){
     const {flags} = this.parse(IngestCommand)
     const ingestService = await this.buildIngestService(flags)
-    ingestService.run()
+
+    try {
+      await ingestService.run()
+    } catch (error) {
+      throw error
+    }
   }
 
   async buildIngestService({ inputFile }) {

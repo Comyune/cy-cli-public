@@ -1,4 +1,5 @@
 const Base = require('./base')
+const Document = require('../model/document')
 
 class Ingest extends Base {
   constructor(options, services) {
@@ -7,14 +8,8 @@ class Ingest extends Base {
 
   async run() {
     const { input } = this.options 
-
-    const result = {
-      title:   null,
-      content: input,
-      date:    this.todaysDate(),
-    }
-
-    this.services.outputJson(result)
+    const document = new Document(input)
+    this.services.outputJson(document.toJson())
     return true
   }
 }

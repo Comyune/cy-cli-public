@@ -9,6 +9,10 @@ class Base extends Command {
     super(argv, config)
   }
 
+  catch(error) {
+    console.log("ERROR", error)
+  }
+
   // private
 
   output(message) {
